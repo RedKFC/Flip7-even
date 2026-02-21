@@ -13,12 +13,10 @@
         .container { width: 100%; max-width: 450px; }
         h2 { text-align: center; color: #f1c40f; margin-bottom: 15px; font-size: 1.4rem; }
         
-        /* 篩選區 */
         .filter-group { background: #1e1e1e; padding: 12px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; }
         .filter-item { display: flex; align-items: center; margin-bottom: 10px; font-size: 15px; }
         input[type="checkbox"] { width: 22px; height: 22px; margin-right: 12px; accent-color: #f1c40f; }
 
-        /* 抽卡按鈕 */
         .draw-btn { 
             width: 100%; height: 55px; background: #f1c40f; color: #000; border: none; 
             border-radius: 28px; font-size: 19px; font-weight: bold; cursor: pointer;
@@ -26,7 +24,6 @@
         }
         .draw-btn:active { transform: scale(0.96); opacity: 0.9; }
 
-        /* 卡片顯示區 */
         .card-box { 
             min-height: 280px; background: #ffffff; color: #2c3e50; border-radius: 18px; 
             padding: 25px; display: none; flex-direction: column; justify-content: center;
@@ -64,14 +61,14 @@
 
 <script>
     const cards = [
-        [span_4](start_span)[span_5](start_span)[span_6](start_span)// 遊戲設置 (Blue)[span_4](end_span)[span_5](end_span)[span_6](end_span)
+        // 遊戲設置 (Blue)
         { t: "熱烈開場", d: "你的起始牌會被放在一邊，不計入爆牌。本輪結束時，你可以賦予它任意數值。", c: "setup", cn: "遊戲設置", bg: "var(--setup-bg)" },
         { t: "幕後黑手", d: "一輪開始時，每位玩家都會收到一張面朝下的牌，只有當該玩家選擇「停手」時才會翻開。", c: "setup", cn: "遊戲設置", bg: "var(--setup-bg)" },
         { t: "公同共有", d: "將一張數字牌正面朝上放置在場地中央作為公牌，這張牌的分數將計入所有玩家的總分，同時也有可能導致爆牌。", c: "setup", cn: "遊戲設置", bg: "var(--setup-bg)" },
         { t: "雙倍馬力", d: "每位玩家在一輪開始時額外獲得兩張正面朝下的起始牌。所有玩家在第一次「再來一張」時同時翻開這兩張牌，並正常結算所有效果。", c: "setup", cn: "遊戲設置", bg: "var(--setup-bg)" },
         { t: "原味最好", d: "本輪遊戲使用原版「七翻天」的基礎規則。", c: "setup", cn: "遊戲設置", bg: "var(--setup-bg)" },
 
-        [span_7](start_span)[span_8](start_span)[span_9](start_span)[span_10](start_span)// 計分與回合修正 (Green)[span_7](end_span)[span_8](end_span)[span_9](end_span)[span_10](end_span)
+        // 計分與回合修正 (Green)
         { t: "最低罰則", d: "如果在本輪結束時，你擁有不同的數字牌少於三張，則從你的得分中減去10分。", c: "correction", cn: "計分修正", bg: "var(--correction-bg)" },
         { t: "幽靈計分", d: "如果你爆牌，你仍然會記錄本輪中獲得的分數。", c: "correction", cn: "計分修正", bg: "var(--correction-bg)" },
         { t: "精準打擊", d: "如果你選擇「停手」且總積分剛好為21分，你將獲得額外15分獎勵積分。", c: "correction", cn: "計分修正", bg: "var(--correction-bg)" },
@@ -81,7 +78,7 @@
         { t: "沉重的負擔", d: "本輪遊戲中，10號牌的價值為0分，但仍計入爆牌數。", c: "correction", cn: "計分修正", bg: "var(--correction-bg)" },
         { t: "高風險投資", d: "一輪結束時，每位玩家所擁有最大的數字牌，其分數翻倍。", c: "correction", cn: "計分修正", bg: "var(--correction-bg)" },
 
-        [span_11](start_span)[span_12](start_span)[span_13](start_span)[span_14](start_span)// 即時互動與節奏變調 (Orange)[span_11](end_span)[span_12](end_span)[span_13](end_span)[span_14](end_span)
+        // 即時互動與節奏變調 (Orange)
         { t: "隨機凍結", d: "3回合後，隨機選擇一名玩家，立即受到凍結效果並退出本輪遊戲，但保留其當前分數。", c: "interaction", cn: "即時互動", bg: "var(--interaction-bg)" },
         { t: "加倍放送", d: "回合開始時，玩家兩兩配對(僅限偶數名玩家)。將兩位搭檔本輪的得分相加除以2，然後將該數值加到每位玩家本輪的得分中。", c: "interaction", cn: "即時互動", bg: "var(--interaction-bg)" },
         { t: "細煮慢燉", d: "當兩名玩家爆牌後，本輪遊戲立即結束。剩餘玩家立即計算各自的分數。", c: "interaction", cn: "即時互動", bg: "var(--interaction-bg)" },
@@ -94,14 +91,14 @@
         { t: "交叉火力", d: "一輪結束時：將你本輪的得分加到你的總得分中，或從相鄰兩名玩家的得分中減去你回合得分的一半(向下取整)。", c: "interaction", cn: "即時互動", bg: "var(--interaction-bg)" },
         { t: "重獲新生", d: "本輪中總分最低的玩家可以棄掉一張抽到的牌，並抽取一張新的牌。", c: "interaction", cn: "即時互動", bg: "var(--interaction-bg)" },
 
-        [span_15](start_span)[span_16](start_span)[span_17](start_span)// 逆轉之勢 (Purple)[span_15](end_span)[span_16](end_span)[span_17](end_span)
+        // 逆轉之勢 (Purple)
         { t: "回鍋福利", d: "本輪結束後，總積分在榜上排名墊底的玩家將額外獲得15分獎勵積分。", c: "reversal", cn: "逆轉之勢", bg: "var(--reversal-bg)" },
         { t: "最後生還者", d: "如果你是本輪結束時最後一位仍在遊戲且沒有爆牌的玩家，你將會額外獲得10分獎勵積分。", c: "reversal", cn: "逆轉之勢", bg: "var(--reversal-bg)" },
         { t: "暴死復活", d: "如果你爆牌了，你可以支付總得分中的10分，重新以存活玩家身分繼續該輪遊戲。", c: "reversal", cn: "逆轉之勢", bg: "var(--reversal-bg)" },
         { t: "安全網", d: "總分最低的玩家如果爆牌，可以抽一張牌替換（每輪一次）。", c: "reversal", cn: "逆轉之勢", bg: "var(--reversal-bg)" },
         { t: "弱勢群體", d: "一輪結束時，總分最低的玩家獲得該輪的全部分數。其他玩家獲得一半(向下取整)。若並列最低分則均得全部分數。", c: "reversal", cn: "逆轉之勢", bg: "var(--reversal-bg)" },
 
-        [span_18](start_span)[span_19](start_span)// 無序混亂 (Red)[span_18](end_span)[span_19](end_span)
+        // 無序混亂 (Red)
         { t: "一擊即中", d: "如果你在收到起始卡後立即選擇「停手」，你將額外獲得20分獎勵積分。", c: "chaos", cn: "無序混亂", bg: "var(--chaos-bg)" },
         { t: "驚喜盲抽", d: "本輪你抽到的所有牌都面朝下。只有當你選擇「停手」或爆牌時，才能亮出所有牌。", c: "chaos", cn: "無序混亂", bg: "var(--chaos-bg)" },
         { t: "超負荷", d: "本輪中，每當抽到第三、六、九張12號牌時，所有其他仍存活的玩家必須立即抽一張牌。", c: "chaos", cn: "無序混亂", bg: "var(--chaos-bg)" }
